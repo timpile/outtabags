@@ -1,0 +1,58 @@
+<h1>Add My Location</h1>
+
+<div class="row find-location">
+  <div class="column">
+    <button id="find-location-button">Find Me</button>
+  </div>
+  <div class="column">
+    <div id="find-location-loader" hidden>
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  </div> 
+  <div class="column column-67"></div>
+</div>
+
+<div id="current-location" hidden>
+  <%= google_staticmap_img_tag(id: "map") %>
+</div>
+
+<%= form_for @changeset, Routes.location_path(@conn, :create), fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="row">
+    <div class="column">
+      <%= label f, :lat, "Latitude" %>
+      <span id="current-lat"></span>
+      <%= text_input f, :lat %>
+      <%= error_tag f, :lat %>
+    </div>
+    <div class="column">
+      <%= label f, :lng, "Longitude" %>
+      <span id="current-lng"></span>
+      <%= text_input f, :lng %>
+      <%= error_tag f, :lng %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="column">
+      <%= label f, :device_info %>
+      <span id="current-device"></span>
+      <%= text_input f, :device_info %>
+      <%= error_tag f, :device_info %>
+    </div>
+  </div>
+
+  <div id="populate-location-button-container" hidden>
+    <%= link "Use This Location", to: "#", id: "populate-location-button" %>
+    <%= link "Clear Values", to: "#", id: "clear-location-button", class: "float-right" %>
+  </div>
+  <%= submit "Add", id: "add-location-button" %>
+<% end %>

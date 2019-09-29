@@ -1,35 +1,21 @@
 <section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>A productive web framework that<br/>does not compromise speed or maintainability.</p>
+  <h1><%= gettext "Welcome to %{name}!", name: "OuttaBags" %></h1>
+  <p>Not much to see right now...</p>
 </section>
 
 <section class="row">
   <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.4/CHANGELOG.md">v1.4 Changelog</a>
-      </li>
-    </ul>
+    <h2 class="align-center">View Locations</h2>
+    <%= link "Geo Tag List", to: Routes.location_path(@conn, :index), class: "button btn-block", type: "Button" %>
   </article>
   <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-    </ul>
+    <h2 class="align-center">Add My Location</h2>
+    <%= link "Find Me", to: Routes.location_path(@conn, :new), class: "button btn-block", type: "button" %>
   </article>
+</section>
+
+<section class="row">
+  <div class="column">
+    <%= google_staticmap_img_tag(id: "locations-map", locations: @locations) %>
+  </div>
 </section>

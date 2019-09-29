@@ -20,9 +20,13 @@ defmodule Outtabags.MixProject do
   def application do
     [
       mod: {Outtabags.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: app_list(Mix.env)
     ]
   end
+
+  defp app_list(:dev), do: [:dotenv | app_list()]
+  defp app_list(_), do: app_list()
+  defp app_list, do: [:logger, :runtime_tools]
 
   # Specifies which paths to compile per environment.
   defp elixirc_paths(:test), do: ["lib", "test/support"]
@@ -43,7 +47,8 @@ defmodule Outtabags.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
-      {:geo_postgis, "~> 3.1"}
+      {:geo_postgis, "~> 3.1"},
+      {:dotenv, "~> 3.0.0"}
     ]
   end
 

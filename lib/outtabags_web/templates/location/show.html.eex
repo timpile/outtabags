@@ -1,0 +1,2 @@
+<h1>Location</h1>
+<%= render "geo_tag.html", geo_tag: @geo_tag, conn: @conn %>

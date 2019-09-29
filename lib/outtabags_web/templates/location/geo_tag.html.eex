@@ -1,0 +1,2 @@
+<strong><%= @geo_tag.device_info %></strong>
+{<%= lat(@geo_tag) %>, <%= lng(@geo_tag) %>}

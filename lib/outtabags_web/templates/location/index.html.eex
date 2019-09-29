@@ -1,0 +1,9 @@
+<h1>Geo Tag Locations</h1>
+
+<%= for geo_tag <- @geo_tags do %>
+    <%= link to: Routes.location_path(@conn, :edit, geo_tag) do %>
+        <div class="geo-tag-row">
+            <%= render "geo_tag.html", geo_tag: geo_tag, conn: @conn %>
+        </div>
+    <% end %>
+<% end %>
