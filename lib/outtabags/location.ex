@@ -1,4 +1,7 @@
 defmodule Outtabags.Location do
+  import Ecto.Query, warn: false
+  import Geo.PostGIS
+
   alias Outtabags.Repo
   alias Outtabags.Location.GeoTag
 
@@ -31,6 +34,16 @@ defmodule Outtabags.Location do
 
   def change_geo_tag(%GeoTag{} = geo_tag) do
     GeoTag.changeset(geo_tag, %{})
+  end
+
+  def get_center_point(geo_tags) do
+    geo_tags_ids = Enum.map(geo_tags, fn gt -> gt.id end)
+    Repo.all(
+      from g in GeoTag,
+        where: g.id in ^geo_tags_ids,
+        select: st_centroid(st_collect(g.geom))
+    )
+    |> List.first()
   end
 
   defp clean_coordinates(attrs) do

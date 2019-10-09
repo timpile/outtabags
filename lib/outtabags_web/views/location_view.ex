@@ -30,22 +30,33 @@ defmodule OuttabagsWeb.LocationView do
   end
 
   def google_staticmap_img_tag(id: id, locations: locations) do
-    img_src = google_staticmap_img_src(size: "500x400", zoom: "15")
-      <> markers_params(locations)
-      <> "&center=35.58888,-78.58888"
-    img_tag(img_src, [id: id])
+    img_src = google_staticmap_img_src(size: "500x400", zoom: "10")
+    case locations do
+       [] -> img_src
+       _ -> img_src <> markers_params(locations) <> center_param(locations)
+    end
+    |> img_tag([id: id])
+  end
+
+  def coordinates_to_string(coordinates) do
+    coordinates
+    |> Tuple.to_list()
+    |> Enum.join(",")
   end
 
   def markers(locations) do
     for location <- locations do
-      location.geom.coordinates
-      |> Tuple.to_list()
-      |> Enum.join(",")
+      location.geom.coordinates |> coordinates_to_string()
     end
     |> Enum.join("|")
   end
 
   def markers_params(locations) do
     "&markers=" <> markers(locations)
+  end
+
+  def center_param(locations) do
+    center = Location.get_center_point(locations).coordinates
+    "&center=" <> coordinates_to_string(center)
   end
 end
